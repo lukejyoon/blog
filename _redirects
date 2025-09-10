@@ -1,8 +1,12 @@
 /index.html  /          301
-/about/      /about     301
+
 /now/        /now       301
 /projects/   /projects  301
+/logs/       /logs      301
 
-/about       /index.html 200
 /now         /index.html 200
 /projects    /index.html 200
+/logs        /index.html 200
+
+/about       /          301
+/about/      /          301

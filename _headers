@@ -1,7 +1,6 @@
-/about
-  Content-Type: text/html; charset=utf-8
 /now
   Content-Type: text/html; charset=utf-8
 /projects
   Content-Type: text/html; charset=utf-8
-
+/logs
+  Content-Type: text/html; charset=utf-8
