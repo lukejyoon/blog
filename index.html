@@ -12,11 +12,16 @@ html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
 .app{min-height:100vh;display:flex;padding:24px}
 .panel{
-  width:clamp(260px,40vw,420px);background:var(--panel);border:1px solid var(--rule);
-  border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.04);padding:20px;overflow:auto
+  width:clamp(260px,40vw,420px);
+  background:var(--panel);
+  border:1px solid var(--rule);
+  border-radius:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+  padding:20px;
+  overflow:auto
 }
 .main{flex:1;padding-left:24px;display:flex}
-.view{flex:1;background:transparent}
+.view{flex:1}
 h1{font-size:1.5rem;margin:0 0 .25rem}
 p{margin:.25rem 0 1rem;color:var(--muted)}
 ul{list-style:none;margin:0;padding:0}
@@ -33,6 +38,7 @@ a:hover::after{opacity:1;transform:scaleX(1)}
       <h1>Yoonhwan Jeong</h1>
       <p>welcome hehe</p>
       <ul class="nav">
+        <li><a href="/" data-route>Home</a></li>
         <li><a href="/now" data-route>Now</a></li>
         <li><a href="/projects" data-route>Projects</a></li>
         <li><a href="/logs" data-route>Logs</a></li>
@@ -89,9 +95,7 @@ document.addEventListener("click", e => {
 
 window.addEventListener("popstate", () => renderPath(location.pathname));
 
-// initial render uses the current URL
 navigate(location.pathname, true);
 </script>
-
 </body>
 </html>
