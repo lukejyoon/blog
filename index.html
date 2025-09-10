@@ -52,40 +52,56 @@ const routes = {
   "/logs":     "/pages/logs.html",
 };
 
+const canon = p => (p !== "/" && p.endsWith("/")) ? p.slice(0, -1) : p;
+
 function setActive(path){
   document.querySelectorAll('[data-route]').forEach(a=>{
-    a.classList.toggle('active', a.getAttribute('href')===path);
+    a.classList.toggle('active', a.getAttribute('href') === path);
   });
 }
 
 async function render(path){
   const url = routes[path] || routes["/"];
   const view = document.getElementById('view');
-  try{
-    const res = await fetch(url, {cache:"no-cache"});
+  try {
+    const res = await fetch(url, { cache: "no-cache" });
     view.innerHTML = await res.text();
-  }catch{
+  } catch {
     view.innerHTML = "<p>Failed to load.</p>";
   }
   setActive(path);
 }
 
-function navigate(path){
-  history.pushState({path}, "", path);
+function navigate(path, replace=false){
+  path = canon(path);
+  if (!routes[path]) path = "/";
+  sessionStorage.setItem("lastPath", path);
+  (replace ? history.replaceState({path}, "", path)
+           : history.pushState({path}, "", path));
   render(path);
 }
 
-document.addEventListener("click",(e)=>{
+document.addEventListener("click", (e)=>{
   const a = e.target.closest('a[data-route]');
-  if(!a) return;
+  if (!a) return;
   e.preventDefault();
   navigate(a.getAttribute("href"));
 });
 
-window.addEventListener("popstate",()=>render(location.pathname));
+window.addEventListener("popstate", ()=>{
+  render(canon(location.pathname));
+});
 
-const initial = (location.pathname.replace(/\/$/,"") || "/");
-render(initial);
+// initial load: prefer current URL; if unknown, fall back to last route this tab had
+(() => {
+  let initial = canon(location.pathname);
+  if (!routes[initial]) {
+    const last = sessionStorage.getItem("lastPath");
+    initial = (last && routes[last]) ? last : "/";
+  }
+  history.replaceState({path: initial}, "", initial);
+  render(initial);
+})();
 </script>
 </body>
 </html>
