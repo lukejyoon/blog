@@ -33,9 +33,9 @@ a:hover::after{opacity:1;transform:scaleX(1)}
       <h1>Yoonhwan Jeong</h1>
       <p>welcome hehe</p>
       <ul class="nav">
-        <li><a href="/about" data-route>About</a></li>
         <li><a href="/now" data-route>Now</a></li>
         <li><a href="/projects" data-route>Projects</a></li>
+        <li><a href="/logs" data-route>Logs</a></li>
       </ul>
     </aside>
 
@@ -46,10 +46,10 @@ a:hover::after{opacity:1;transform:scaleX(1)}
 
 <script>
 const routes = {
-  "/":        "/pages/home.html",
-  "/about":   "/pages/about.html",
-  "/now":     "/pages/now.html",
-  "/projects":"/pages/projects.html",
+  "/":         "/pages/home.html",
+  "/now":      "/pages/now.html",
+  "/projects": "/pages/projects.html",
+  "/logs":     "/pages/logs.html",
 };
 
 function setActive(path){
@@ -63,8 +63,8 @@ async function render(path){
   const view = document.getElementById('view');
   try{
     const res = await fetch(url, {cache:"no-cache"});
-    view.innerHTML = await res.text();     // no "Loading…" placeholder
-  }catch(e){
+    view.innerHTML = await res.text();
+  }catch{
     view.innerHTML = "<p>Failed to load.</p>";
   }
   setActive(path);
@@ -84,7 +84,7 @@ document.addEventListener("click",(e)=>{
 
 window.addEventListener("popstate",()=>render(location.pathname));
 
-const initial = location.pathname.replace(/\/$/,"") || "/";
+const initial = (location.pathname.replace(/\/$/,"") || "/");
 render(initial);
 </script>
 </body>
