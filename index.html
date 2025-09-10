@@ -25,7 +25,6 @@ a,a:visited{color:inherit;text-decoration:none;position:relative}
 a::after{content:"";position:absolute;left:0;right:0;height:2px;background:currentColor;opacity:0;bottom:-8px;transform:scaleX(.9);transition:opacity .2s,transform .2s}
 a:hover::after{opacity:1;transform:scaleX(1)}
 .nav a.active{font-weight:700}
-.loading{color:var(--muted)}
 </style>
 </head>
 <body>
@@ -47,10 +46,10 @@ a:hover::after{opacity:1;transform:scaleX(1)}
 
 <script>
 const routes = {
-  "/":       "/pages/home.html",      // optional (or leave blank)
-  "/about":  "/pages/about.html",
-  "/now":    "/pages/now.html",
-  "/projects": "/pages/projects.html",
+  "/":        "/pages/home.html",
+  "/about":   "/pages/about.html",
+  "/now":     "/pages/now.html",
+  "/projects":"/pages/projects.html",
 };
 
 function setActive(path){
@@ -62,11 +61,9 @@ function setActive(path){
 async function render(path){
   const url = routes[path] || routes["/"];
   const view = document.getElementById('view');
-  if(!url){ view.innerHTML = ""; return; }
-  view.innerHTML = '<p class="loading">Loading…</p>';
   try{
     const res = await fetch(url, {cache:"no-cache"});
-    view.innerHTML = await res.text();
+    view.innerHTML = await res.text();     // no "Loading…" placeholder
   }catch(e){
     view.innerHTML = "<p>Failed to load.</p>";
   }
@@ -78,22 +75,17 @@ function navigate(path){
   render(path);
 }
 
-// Intercept left-nav clicks
-document.addEventListener("click", (e)=>{
+document.addEventListener("click",(e)=>{
   const a = e.target.closest('a[data-route]');
   if(!a) return;
   e.preventDefault();
   navigate(a.getAttribute("href"));
 });
 
-// On initial load or back/forward
-window.addEventListener("popstate", ()=>render(location.pathname));
+window.addEventListener("popstate",()=>render(location.pathname));
 
-// Kick off
-render(location.pathname.replace(/\/$/,"") || "/");
+const initial = location.pathname.replace(/\/$/,"") || "/";
+render(initial);
 </script>
 </body>
 </html>
-
-
-
