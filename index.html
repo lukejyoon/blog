@@ -3,156 +3,95 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Title</title>
-
-<!-- Adjust font by changing this Google Fonts link (or remove it) -->
+<title>Site</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-
 <style>
-/* ===== Theme tokens (colors & font) ===== */
-:root{
-  /* Adjust: background color of the page */
-  --bg: #f2f4f7;
-
-  /* Adjust: main text color */
-  --fg: #111;
-
-  /* Adjust: muted/subtitle color */
-  --muted: #6b7280;
-
-  /* Adjust: panel (left rectangle) fill */
-  --panel: #ffffff;
-
-  /* Adjust: subtle borders & rules */
-  --rule: #e5e7eb;
-
-  /* Adjust: primary font family (must match your <link> above if using Google Fonts) */
-  --font: Inter;
-}
-
-/* ===== Base layout & typography ===== */
+:root{--bg:#f2f4f7;--fg:#111;--muted:#6b7280;--panel:#fff;--rule:#e5e7eb}
 *{box-sizing:border-box}
 html,body{height:100%}
-body{
-  margin:0;
-
-  /* Adjust: base font size */
-  font-size:16px;
-
-  /* Adjust: base line height */
-  line-height:1.6;
-
-  /* Adjust: font stack (first item should match --font) */
-  font-family: var(--font), system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-
-  background:var(--bg);
-  color:var(--fg);
-}
-
-/* ===== Outer frame around the left panel ===== */
-.frame{
-  min-height:100vh;
-
-  /* Adjust: outer padding (top | right | bottom | left) so panel doesn't touch edges */
-  padding:24px 0 24px 24px;
-
-  display:flex;
-}
-
-/* ===== Left panel (the single rectangle) ===== */
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+.app{min-height:100vh;display:flex;padding:24px}
 .panel{
-  /* Adjust: panel width (min, preferred %, max) */
-  width: clamp(260px, 40vw, 420px);
-
-  /* Adjust: panel height relative to viewport minus top+bottom padding from .frame */
-  height: calc(100vh - 48px);
-
-  background: var(--panel);
-
-  /* Adjust: corner radius */
-  border-radius: 14px;
-
-  /* Adjust: border color via --rule above */
-  border: 1px solid var(--rule);
-
-  /* Adjust: shadow subtlety */
-  box-shadow: 0 2px 8px rgba(0,0,0,.04);
-
-  /* Adjust: inner padding inside the panel */
-  padding: 20px;
-
-  overflow:auto;
+  width:clamp(260px,40vw,420px);background:var(--panel);border:1px solid var(--rule);
+  border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.04);padding:20px;overflow:auto
 }
-
-/* ===== Typography within the panel ===== */
-h1{
-  /* Adjust: title size */
-  font-size: 1.5rem;
-
-  margin:0 0 .25rem;
-}
-p{
-  margin:.25rem 0 1rem;
-
-  /* Adjust: subtitle color via --muted */
-  color: var(--muted);
-}
-
-/* ===== List ===== */
+.main{flex:1;padding-left:24px;display:flex}
+.view{flex:1;background:transparent}
+h1{font-size:1.5rem;margin:0 0 .25rem}
+p{margin:.25rem 0 1rem;color:var(--muted)}
 ul{list-style:none;margin:0;padding:0}
-li{
-  /* Adjust: vertical spacing for each item */
-  padding:0.5rem 0;
-}
-li+li{margin-top:.25rem}
-
-/* ===== Links (custom underline on hover) ===== */
-a, a:visited{
-  color:inherit;
-
-  /* Adjust: keep underline off by default */
-  text-decoration:none;
-
-  position:relative;
-}
-
-/* Pseudo-underline element */
-a::after{
-  content:"";
-  position:absolute; left:0; right:0;
-
-  /* Adjust: underline thickness */
-  height:2px;
-
-  background:currentColor;
-  opacity:0;
-
-  /* Adjust: underline distance below the text (gap) */
-  bottom:-3px;
-
-  transform:scaleX(.9);
-  transition: opacity .2s ease, transform .2s ease;
-}
-a:hover::after{
-  opacity:1;
-  transform:scaleX(1);
-}
+li{padding:.6rem 0}
+a,a:visited{color:inherit;text-decoration:none;position:relative}
+a::after{content:"";position:absolute;left:0;right:0;height:2px;background:currentColor;opacity:0;bottom:-8px;transform:scaleX(.9);transition:opacity .2s,transform .2s}
+a:hover::after{opacity:1;transform:scaleX(1)}
+.nav a.active{font-weight:700}
+.loading{color:var(--muted)}
 </style>
 </head>
 <body>
-  <div class="frame">
-    <div class="panel">
+  <div class="app">
+    <aside class="panel">
       <h1>Yoonhwan Jeong</h1>
       <p>welcome hehe</p>
-      <ul>
-        <li><a href="/about/">About</a></li>
-        <li><a href="/now/">Now</a></li>
-        <li><a href="/projects/">Projects</a></li>
-        <li><a href="/dailyLogs/">Daily Logs</a></li>
-
+      <ul class="nav">
+        <li><a href="/about" data-route>About</a></li>
+        <li><a href="/now" data-route>Now</a></li>
+        <li><a href="/projects" data-route>Projects</a></li>
       </ul>
-    </div>
+    </aside>
+
+    <section class="main">
+      <div id="view" class="view" aria-live="polite"></div>
+    </section>
   </div>
+
+<script>
+const routes = {
+  "/":       "/pages/home.html",      // optional (or leave blank)
+  "/about":  "/pages/about.html",
+  "/now":    "/pages/now.html",
+  "/projects": "/pages/projects.html",
+};
+
+function setActive(path){
+  document.querySelectorAll('[data-route]').forEach(a=>{
+    a.classList.toggle('active', a.getAttribute('href')===path);
+  });
+}
+
+async function render(path){
+  const url = routes[path] || routes["/"];
+  const view = document.getElementById('view');
+  if(!url){ view.innerHTML = ""; return; }
+  view.innerHTML = '<p class="loading">Loading…</p>';
+  try{
+    const res = await fetch(url, {cache:"no-cache"});
+    view.innerHTML = await res.text();
+  }catch(e){
+    view.innerHTML = "<p>Failed to load.</p>";
+  }
+  setActive(path);
+}
+
+function navigate(path){
+  history.pushState({path}, "", path);
+  render(path);
+}
+
+// Intercept left-nav clicks
+document.addEventListener("click", (e)=>{
+  const a = e.target.closest('a[data-route]');
+  if(!a) return;
+  e.preventDefault();
+  navigate(a.getAttribute("href"));
+});
+
+// On initial load or back/forward
+window.addEventListener("popstate", ()=>render(location.pathname));
+
+// Kick off
+render(location.pathname.replace(/\/$/,"") || "/");
+</script>
 </body>
 </html>
 

@@ -2,4 +2,7 @@
 /about/      /about     301
 /now/        /now       301
 /projects/   /projects  301
-/firstGame/  /firstGame  301
+
+/about       /index.html 200
+/now         /index.html 200
+/projects    /index.html 200
