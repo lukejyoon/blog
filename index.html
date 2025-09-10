@@ -52,7 +52,7 @@ const routes = {
   "/logs":     "/pages/logs.html",
 };
 
-const canon = p => (p !== "/" && p.endsWith("/")) ? p.slice(0, -1) : p;
+const canon = p => (p !== "/" && p.endsWith("/")) ? p.slice(0,-1) : p;
 
 function setActive(path){
   document.querySelectorAll('[data-route]').forEach(a=>{
@@ -60,48 +60,38 @@ function setActive(path){
   });
 }
 
-async function render(path){
-  const url = routes[path] || routes["/"];
-  const view = document.getElementById('view');
-  try {
-    const res = await fetch(url, { cache: "no-cache" });
+async function renderPath(path){
+  path = canon(path);
+  const target = routes[path] ? path : "/";
+  const view = document.getElementById("view");
+  try{
+    const res = await fetch(routes[target], {cache:"no-cache"});
     view.innerHTML = await res.text();
-  } catch {
+  }catch{
     view.innerHTML = "<p>Failed to load.</p>";
   }
-  setActive(path);
+  setActive(target);
 }
 
 function navigate(path, replace=false){
   path = canon(path);
-  if (!routes[path]) path = "/";
-  sessionStorage.setItem("lastPath", path);
-  (replace ? history.replaceState({path}, "", path)
-           : history.pushState({path}, "", path));
-  render(path);
+  if (replace) history.replaceState({path}, "", path);
+  else history.pushState({path}, "", path);
+  renderPath(path);
 }
 
-document.addEventListener("click", (e)=>{
+document.addEventListener("click", e => {
   const a = e.target.closest('a[data-route]');
   if (!a) return;
   e.preventDefault();
   navigate(a.getAttribute("href"));
 });
 
-window.addEventListener("popstate", ()=>{
-  render(canon(location.pathname));
-});
+window.addEventListener("popstate", () => renderPath(location.pathname));
 
-// initial load: prefer current URL; if unknown, fall back to last route this tab had
-(() => {
-  let initial = canon(location.pathname);
-  if (!routes[initial]) {
-    const last = sessionStorage.getItem("lastPath");
-    initial = (last && routes[last]) ? last : "/";
-  }
-  history.replaceState({path: initial}, "", initial);
-  render(initial);
-})();
+// initial render uses the current URL
+navigate(location.pathname, true);
 </script>
+
 </body>
 </html>
