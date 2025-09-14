@@ -94,12 +94,13 @@
 
     /* Rounded rectangular image on right side */
     .page-image {
-      float: right;
-      margin-left: 24px;
-      max-width: 40%;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: block;
+    margin: 0 auto;
+    max-width: calc(100% - 80px); /* leaves 40px gap on both sides */
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+
   </style>
 </head>
 <body>
