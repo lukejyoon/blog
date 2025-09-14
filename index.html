@@ -9,9 +9,9 @@
     :root{
       --bg:#f2f4f7;
       --ink:#000;
-      --gap:50px;   /* space between divider and main */
-      --line:7px;   /* thickness for divider & name underline */
-      --pad:24px;   /* inner padding */
+      --gap:50px;
+      --line:7px;
+      --pad:24px;
     }
 
     *{box-sizing:border-box}
@@ -31,7 +31,6 @@
       padding:var(--pad) 0;
     }
 
-    /* Sidebar */
     .sidebar{
       padding:var(--pad);
       border-right:var(--line) solid var(--ink);
@@ -39,7 +38,7 @@
     }
 
     .sidebar h1{
-      display:inline-block; /* underline matches text width */
+      display:inline-block;
       margin:0;
       font-size:1.5rem;
       padding-bottom:10px;
@@ -71,17 +70,17 @@
       text-decoration-thickness:calc(var(--line)*.5);
     }
 
-    /* Main column */
     .main{
       padding:var(--pad);
-      /* balance to divider centerline without touching sidebar */
       padding-right:calc(var(--pad) + var(--gap) - var(--line)/2);
     }
 
-    /* Ensure loaded page content uses full column width (prevents early wrap) */
-    #view{ width:100%; max-width:none; }
-    #view > *{ max-width:none; }
-    #view p{ overflow-wrap:anywhere; word-break:normal; }
+    /* Prevent early wraps from page fragments */
+    #view{ width:100%; max-width:none !important; max-inline-size:none !important; }
+    #view *{ max-width:none !important; max-inline-size:none !important; }
+    #view :where(p,li,h1,h2,h3,h4,h5,h6){ overflow-wrap:anywhere; word-break:normal; hyphens:auto; }
+    #view :where(pre,code){ white-space:pre-wrap; word-break:break-word; }
+    #view img, #view video{ max-width:100%; height:auto; }
   </style>
 </head>
 <body>
@@ -115,7 +114,7 @@
 
     async function renderPath(path) {
       path = canon(path);
-      const target = routes[path] ? path : "/projects"; // default to "Projects"
+      const target = routes[path] ? path : "/projects";
       const view = document.getElementById("view");
 
       try {
