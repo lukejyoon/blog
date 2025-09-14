@@ -8,12 +8,12 @@
   <style>
     :root{
       --bg:#f2f4f7;
-      --fg:#111;
-      --muted:#6b7280;
+      --ink:#000;          /* single black used everywhere */
+      --fg:var(--ink);
+      --muted:var(--ink);
       --gap:50px;
       --line:7px;
       --pad:24px;
-      --ink:#000;           /* black used for divider & underline */
     }
 
     *{box-sizing:border-box}
@@ -40,7 +40,7 @@
     }
 
     .sidebar h1{
-      display:inline-block;
+      display:inline-block;  /* keeps underline same width as text */
       margin:0;
       font-size:1.5rem;
       padding-bottom:10px;
@@ -63,7 +63,7 @@
     .nav li{ padding:.6rem 0; }
 
     a, a:visited{
-      color:inherit;
+      color:inherit;         /* stays black */
       text-decoration:none;
       font-weight:500;
       transition:font-weight .15s;
@@ -73,12 +73,9 @@
     .nav a:active,
     .nav a.active{ font-weight:700; }
 
-    .main{
-      padding:var(--pad);
-      color: rgba(0,0,0,.15);   /* 20% of the black used in the underline */
-    }
+    .main{ padding:var(--pad); }  /* inherits black */
 
-    p{ margin:.25rem 0 1rem; color:var(--muted); }
+    p{ margin:.25rem 0 1rem; color:var(--muted); } /* black */
   </style>
 </head>
 <body>
