@@ -4,13 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Jeong Yoon Hwan</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#f2f4f7;
-      --ink:#000;          /* single black used everywhere */
-      --fg:var(--ink);
-      --muted:var(--ink);
+      --ink:#000;
       --gap:50px;
       --line:7px;
       --pad:24px;
@@ -21,8 +19,8 @@
     body{
       margin:0;
       background:var(--bg);
-      color:var(--fg);
-      font:16px/1.6 Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--ink);
+      font:16px/1.6 Poppins,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
     }
 
     .app{
@@ -40,7 +38,7 @@
     }
 
     .sidebar h1{
-      display:inline-block;  /* keeps underline same width as text */
+      display:inline-block;
       margin:0;
       font-size:1.5rem;
       padding-bottom:10px;
@@ -49,7 +47,6 @@
       content:"";
       display:block;
       height:var(--line);
-      width:100%;
       background:var(--ink);
     }
 
@@ -57,25 +54,23 @@
       list-style:none;
       margin:12px 0 0;
       padding:0;
-      width:100%;
-      text-align:center;
     }
     .nav li{ padding:.6rem 0; }
 
     a, a:visited{
-      color:inherit;         /* stays black */
+      color:inherit;
       text-decoration:none;
       font-weight:500;
-      transition:font-weight .15s;
+      text-underline-offset:6px;
     }
     .nav a:hover,
     .nav a:focus-visible,
-    .nav a:active,
-    .nav a.active{ font-weight:700; }
+    .nav a:active{
+      text-decoration:underline;
+      text-decoration-thickness:calc(var(--line)*.5);
+    }
 
-    .main{ padding:var(--pad); }  /* inherits black */
-
-    p{ margin:.25rem 0 1rem; color:var(--muted); } /* black */
+    .main{ padding:var(--pad); }
   </style>
 </head>
 <body>
