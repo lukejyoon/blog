@@ -7,11 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Colors – change these to restyle the theme */
-      --bg: #f2f4f7;    /* Background color */
-      --fg: #111;       /* Default text color */
-      --muted: #6b7280; /* Subtle text color */
-      --rule: #d1d5db;  /* Divider (vertical line) color */
+      --bg: #f2f4f7;
+      --fg: #111;
+      --muted: #6b7280;
+      --rule: #d1d5db;
+      --gap: 50px; /* master spacing */
     }
 
     * { box-sizing: border-box; }
@@ -25,36 +25,39 @@
     }
 
     .app {
-      min-height: 100vh; 
-      display: flex;     
-      padding: 24px 0;   
-      padding-left: 50px; /* pushes sidebar & content to the right */
+      min-height: 100vh;
+      display: flex;
+      padding: 24px 0;
+      padding-left: var(--gap); /* space: screen → sidebar */
     }
 
     .sidebar {
       width: clamp(200px, 25vw, 280px);
       padding: 24px;
       position: relative;
+      margin-right: var(--gap); /* reserve space for gap + line */
     }
 
     .sidebar::after {
       content: "";
       position: absolute;
-      top: 25px;     
-      bottom: 25px;  
-      right: 0;      
-      width: 6px;        
+      top: 40px;
+      bottom: 40px;
+      /* Center the line inside the gap */
+      right: calc(-0.5 * var(--gap) - 3px); 
+      width: 6px;
       background: var(--rule);
-      border-radius: 6px; 
+      border-radius: 6px;
     }
 
     .main {
-      flex: 1;        
-      padding: 24px;  
+      flex: 1;
+      padding: 24px;
+      margin-left: var(--gap); /* space: line → content */
     }
 
     h1 {
-      font-size: 1.5rem; 
+      font-size: 1.5rem;
       margin: 0 0 .25rem;
     }
 
@@ -64,30 +67,30 @@
     }
 
     ul {
-      list-style: none; 
+      list-style: none;
       margin: 0;
       padding: 0;
     }
 
     li {
-      padding: .6rem 0; 
+      padding: .6rem 0;
     }
 
     a, a:visited {
-      color: inherit;       
-      text-decoration: none; 
-      font-weight: 500;      
-      transition: font-weight .15s; 
+      color: inherit;
+      text-decoration: none;
+      font-weight: 500;
+      transition: font-weight .15s;
     }
 
     .nav a:hover,
     .nav a:focus-visible,
     .nav a:active {
-      font-weight: 700; 
+      font-weight: 700;
     }
 
     .nav a.active {
-      font-weight: 700; 
+      font-weight: 700;
     }
   </style>
 </head>
