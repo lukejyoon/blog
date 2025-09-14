@@ -11,7 +11,7 @@
       --fg: #111;
       --muted: #6b7280;
       --rule: #d1d5db;
-      --gap: 50px; /* master spacing */
+      --gap: 50px;
     }
 
     * { box-sizing: border-box; }
@@ -28,14 +28,14 @@
       min-height: 100vh;
       display: flex;
       padding: 24px 0;
-      padding-left: var(--gap); /* space: screen → sidebar */
+      padding-left: var(--gap);
     }
 
     .sidebar {
       width: clamp(200px, 25vw, 280px);
       padding: 24px;
       position: relative;
-      margin-right: var(--gap); /* reserve space for gap + line */
+      margin-right: var(--gap);
     }
 
     .sidebar::after {
@@ -43,8 +43,7 @@
       position: absolute;
       top: 25px;
       bottom: 25px;
-      /* Center the line inside the gap */
-      right: calc(-0.5 * var(--gap) - 3px); 
+      right: calc(-0.5 * var(--gap) - 3px);
       width: 6px;
       background: var(--rule);
       border-radius: 6px;
@@ -53,7 +52,7 @@
     .main {
       flex: 1;
       padding: 24px;
-      margin-left: var(--gap); /* space: line → content */
+      margin-left: var(--gap);
     }
 
     h1 {
@@ -92,6 +91,15 @@
     .nav a.active {
       font-weight: 700;
     }
+
+    /* Rounded rectangular image on right side */
+    .page-image {
+      float: right;
+      margin-left: 24px;
+      max-width: 40%;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
   </style>
 </head>
 <body>
@@ -100,7 +108,6 @@
       <h1>Yoonhwan Jeong</h1>
       <p>welcome hehe</p>
       <ul class="nav">
-        <li><a href="/" data-route>Home</a></li>
         <li><a href="/now" data-route>Now</a></li>
         <li><a href="/projects" data-route>Projects</a></li>
         <li><a href="/logs" data-route>Logs</a></li>
@@ -114,7 +121,6 @@
 
   <script>
     const routes = {
-      "/": "/pages/home.html",
       "/now": "/pages/now.html",
       "/projects": "/pages/projects.html",
       "/logs": "/pages/logs.html",
@@ -130,7 +136,7 @@
 
     async function renderPath(path) {
       path = canon(path);
-      const target = routes[path] ? path : "/";
+      const target = routes[path] ? path : "/now"; // default to "Now"
       const view = document.getElementById("view");
 
       try {
