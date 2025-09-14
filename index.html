@@ -22,8 +22,6 @@
       background: var(--bg);
       color: var(--fg);
       font: 16px/1.6 Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      height: 100vh; /* make body exactly viewport height */
-      overflow: hidden; /* prevent scrolling */
     }
 
     .app {
@@ -55,10 +53,6 @@
       flex: 1;
       padding: 24px;
       margin-left: var(--gap);
-      height: 100vh;        /* full viewport height */
-      display: flex;
-      justify-content: center; /* center horizontally */
-      align-items: center;     /* center vertically */
     }
 
     h1 {
@@ -97,15 +91,6 @@
     .nav a.active {
       font-weight: 700;
     }
-
-    .page-rectangle {
-      background: #000;
-      width: 70%;         /* horizontal size */
-      height: 100%;       /* fill available vertical space */
-      max-height: 100vh;  /* never exceed screen height */
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
   </style>
 </head>
 <body>
@@ -121,9 +106,7 @@
     </aside>
 
     <section class="main">
-      <div id="view" class="view" aria-live="polite">
-        <div class="page-rectangle"></div>
-      </div>
+      <div id="view" class="view" aria-live="polite"></div>
     </section>
   </div>
 
