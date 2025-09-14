@@ -12,6 +12,7 @@
       --gap:50px;
       --line:7px;
       --pad:24px;
+      --nudge:12px; /* move right padding left by this amount */
     }
 
     *{box-sizing:border-box}
@@ -70,7 +71,10 @@
       text-decoration-thickness:calc(var(--line)*.5);
     }
 
-    .main{ padding:var(--pad); }
+    .main{
+      padding:var(--pad);
+      padding-right:calc(var(--pad) + var(--gap) - var(--nudge));
+    }
   </style>
 </head>
 <body>
@@ -104,7 +108,7 @@
 
     async function renderPath(path) {
       path = canon(path);
-      const target = routes[path] ? path : "/projects"; // default to "Projects"
+      const target = routes[path] ? path : "/projects";
       const view = document.getElementById("view");
 
       try {
