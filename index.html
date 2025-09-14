@@ -9,9 +9,9 @@
     :root{
       --bg:#f2f4f7;
       --ink:#000;
-      --gap:50px;
-      --line:8px;   /* even thickness avoids 0.5px rounding */
-      --pad:24px;
+      --gap:50px;   /* space between divider and main */
+      --line:7px;   /* thickness for divider & name underline */
+      --pad:24px;   /* inner padding */
     }
 
     *{box-sizing:border-box}
@@ -31,7 +31,7 @@
       padding:var(--pad) 0;
     }
 
-    /* Sidebar unchanged */
+    /* Sidebar */
     .sidebar{
       padding:var(--pad);
       border-right:var(--line) solid var(--ink);
@@ -39,7 +39,7 @@
     }
 
     .sidebar h1{
-      display:inline-block;
+      display:inline-block; /* underline matches text width */
       margin:0;
       font-size:1.5rem;
       padding-bottom:10px;
@@ -71,11 +71,17 @@
       text-decoration-thickness:calc(var(--line)*.5);
     }
 
-    /* Right edge equals left distance to divider centerline */
+    /* Main column */
     .main{
       padding:var(--pad);
+      /* balance to divider centerline without touching sidebar */
       padding-right:calc(var(--pad) + var(--gap) - var(--line)/2);
     }
+
+    /* Ensure loaded page content uses full column width (prevents early wrap) */
+    #view{ width:100%; max-width:none; }
+    #view > *{ max-width:none; }
+    #view p{ overflow-wrap:anywhere; word-break:normal; }
   </style>
 </head>
 <body>
@@ -109,7 +115,7 @@
 
     async function renderPath(path) {
       path = canon(path);
-      const target = routes[path] ? path : "/projects";
+      const target = routes[path] ? path : "/projects"; // default to "Projects"
       const view = document.getElementById("view");
 
       try {
