@@ -49,6 +49,14 @@
       border-radius: 6px;
     }
 
+    .sidebar h1 {
+      display: inline-block;        /* shrink line to text width */
+      border-bottom: 2px solid #000; /* underline */
+      padding-bottom: 4px;          /* little space between text and line */
+      margin-bottom: 16px;
+    }
+
+
     .main {
       flex: 1;
       padding: 24px;
@@ -111,7 +119,6 @@
 
   <script>
     const routes = {
-      "/now": "/pages/now.html",
       "/projects": "/pages/projects.html",
       "/logs": "/pages/logs.html",
     };
@@ -126,7 +133,7 @@
 
     async function renderPath(path) {
       path = canon(path);
-      const target = routes[path] ? path : "/now"; // default to "Now"
+      const target = routes[path] ? path : "/projects"; // default to "Projects"
       const view = document.getElementById("view");
 
       try {
