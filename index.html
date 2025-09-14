@@ -9,9 +9,9 @@
     :root{
       --bg:#f2f4f7;
       --ink:#000;
-      --gap:50px;   /* space between divider and main */
-      --line:7px;   /* thickness for divider & name underline */
-      --pad:24px;   /* inner padding */
+      --gap:50px;  /* gutter at page edges + space between columns */
+      --line:7px;  /* divider & underline thickness */
+      --pad:24px;  /* inner padding for sidebar/main */
     }
 
     *{box-sizing:border-box}
@@ -28,19 +28,17 @@
       display:grid;
       grid-template-columns: clamp(200px,25vw,280px) 1fr;
       column-gap:var(--gap);
-      padding:var(--pad) 0;
+      padding:var(--pad) var(--gap); /* equal left & right gutters */
     }
 
-    /* Sidebar + divider */
     .sidebar{
       padding:var(--pad);
       border-right:var(--line) solid var(--ink);
       text-align:center;
     }
 
-    /* Name with underline exactly text-width, same thickness as divider */
     .sidebar h1{
-      display:inline-block;
+      display:inline-block;     /* underline matches text width */
       margin:0;
       font-size:1.5rem;
       padding-bottom:10px;
@@ -52,7 +50,6 @@
       background:var(--ink);
     }
 
-    /* Nav links centered */
     .nav{
       list-style:none;
       margin:12px 0 0;
@@ -73,11 +70,7 @@
       text-decoration-thickness:calc(var(--line)*.5);
     }
 
-    /* Equal distance from content to divider and to screen edge */
-    .main{
-      padding:var(--pad);
-      padding-right:calc(var(--pad) + var(--gap));
-    }
+    .main{ padding:var(--pad); } /* symmetric; gutters handled by .app */
   </style>
 </head>
 <body>
