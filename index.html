@@ -9,10 +9,9 @@
     :root{
       --bg:#f2f4f7;
       --ink:#000;
-      --gap:50px;
-      --line:7px;
-      --pad:24px;
-      --nudge:2px; /* move right padding left by this amount */
+      --gap:50px;   /* space between divider and main */
+      --line:7px;   /* thickness for divider & name underline */
+      --pad:24px;   /* inner padding */
     }
 
     *{box-sizing:border-box}
@@ -32,6 +31,7 @@
       padding:var(--pad) 0;
     }
 
+    /* Sidebar (unchanged) */
     .sidebar{
       padding:var(--pad);
       border-right:var(--line) solid var(--ink);
@@ -71,9 +71,10 @@
       text-decoration-thickness:calc(var(--line)*.5);
     }
 
+    /* Perfectly balanced: right edge equals left side (gap + half-line to the divider's center) */
     .main{
       padding:var(--pad);
-      padding-right:calc(var(--pad) + var(--gap) - var(--nudge));
+      padding-right:calc(var(--pad) + var(--gap) - var(--line)/2);
     }
   </style>
 </head>
@@ -108,7 +109,7 @@
 
     async function renderPath(path) {
       path = canon(path);
-      const target = routes[path] ? path : "/projects";
+      const target = routes[path] ? path : "/projects"; // default to "Projects"
       const view = document.getElementById("view");
 
       try {
