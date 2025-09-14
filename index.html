@@ -9,9 +9,9 @@
     :root{
       --bg:#f2f4f7;
       --ink:#000;
-      --gap:50px;
-      --line:7px;
-      --pad:24px;
+      --gap:50px;   /* space between divider and main */
+      --line:7px;   /* thickness for divider & name underline */
+      --pad:24px;   /* inner padding */
     }
 
     *{box-sizing:border-box}
@@ -31,12 +31,14 @@
       padding:var(--pad) 0;
     }
 
+    /* Sidebar + divider */
     .sidebar{
       padding:var(--pad);
       border-right:var(--line) solid var(--ink);
       text-align:center;
     }
 
+    /* Name with underline exactly text-width, same thickness as divider */
     .sidebar h1{
       display:inline-block;
       margin:0;
@@ -50,6 +52,7 @@
       background:var(--ink);
     }
 
+    /* Nav links centered */
     .nav{
       list-style:none;
       margin:12px 0 0;
@@ -70,7 +73,11 @@
       text-decoration-thickness:calc(var(--line)*.5);
     }
 
-    .main{ padding:var(--pad); }
+    /* Equal distance from content to divider and to screen edge */
+    .main{
+      padding:var(--pad);
+      padding-right:calc(var(--pad) + var(--gap));
+    }
   </style>
 </head>
 <body>
